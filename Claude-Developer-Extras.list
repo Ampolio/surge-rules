@@ -1,0 +1,6 @@
+# OPTIONAL: Gerrit lookups on relevant Desktop Code checkouts.
+# Reviewed: 2026-10-16 (Asia/Singapore)
+# Source: https://code.claude.com/docs/en/network-config#network-access-requirements
+# Shared infrastructure. Requires Surge with DOMAIN-WILDCARD support.
+# Exact documented pattern; do not proxy all of googlesource.com.
+DOMAIN-WILDCARD,*-review.googlesource.com

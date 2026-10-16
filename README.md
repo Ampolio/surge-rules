@@ -1,81 +1,89 @@
 # Claude 域名规则 · Surge
 
-用于将 Claude / Anthropic 相关域名分流到你选择的代理节点或策略组。核对日期：**2026-10-16（Asia/Singapore）**。
+将 Claude / Anthropic 相关请求分流到你选择的策略。核对日期：**2026-10-16（Asia/Singapore）**。
 
-## 直接导入
+## 选择订阅
 
-推荐订阅地址：
+| 文件 | 条数 | 范围 |
+| --- | ---: | --- |
+| [Claude.list](Claude.list) | 10 | 主规则，包含桌面端 `claude.app` 和专用 CDN |
+| [Claude-Extended.list](Claude-Extended.list) | 26 | 主规则 + Artifacts CDN/字体 + Code 共享服务 + 遥测 + Gerrit 模式 |
+| [Claude.domainset](Claude.domainset) | 10 | 与主规则等价的 DOMAIN-SET 格式 |
 
-```text
-https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude.list
+**希望一条订阅覆盖本次核对的官方网络端点及社区补充项，可选扩展规则。** 共享主机也供其他应用使用，它们访问相同主机时也会走所选策略。扩展版包含一条 `DOMAIN-WILDCARD`，需要 Surge 支持该类型。主规则与扩展规则选一份即可。
+
+## 导入
+
+将下面一行加入当前配置已有的 **`[Rule]` 段**：
+
+```ini
+RULE-SET,https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude-Extended.list,Claude,update-interval=86400
 ```
 
-在 Surge 当前配置的 **`[Rule]` 段**加入下面这一行；如果已有 `[Rule]`，不要再创建重复段落：
+**将策略名 `Claude` 替换为你已有的代理节点或策略组名**，如 `AI` 或 `Proxy`。将这行放在可能先匹配的通用规则、`GEOIP`、`FINAL` 之前。
+
+只需要主规则，或版本不支持 `DOMAIN-WILDCARD`，则使用：
 
 ```ini
 RULE-SET,https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude.list,Claude,update-interval=86400
 ```
 
-**把最后的 `Claude` 替换为你已有的代理节点或策略组名称。** 例如，已有策略组名为 `AI`，则写成：
+也可在 Surge 中添加远程 RULE-SET，填入相应 Raw 地址并选择策略。已有主规则订阅地址保持可用；手动刷新远程规则可立即拉取新版。
+
+## 主规则覆盖
+
+共 **9 条后缀规则 + 1 条精确主机规则**。后缀规则覆盖根域及全部子域，包括动态子域。
+
+| 域名 | 来源与范围 |
+| --- | --- |
+| `anthropic.com` | 官方网络文档；API、应用资源、连接器代理等 |
+| `claude.ai` | 官方网络文档；网页、下载、预览等 |
+| `claude.app` | 官方桌面网络文档；动态预览子域 |
+| `claude.com` | 官方网络文档；登录、Console、文档等 |
+| `claudeusercontent.com` | 官方网络文档；内容、Artifacts、浏览器桥接 |
+| `claudemcpcontent.com` | 官方网络文档；MCP Apps 交互组件 |
+| `claude.dev` | 官方 Cookie 清单中的第一方域名，不代表聊天必需 |
+| `clau.de` | 社区兼容补充 |
+| `claudemcpclient.com` | 社区兼容补充，未据官方文档确认具体用途 |
+| `servd-anthropic-website.b-cdn.net` | 社区兼容补充，仅精确匹配该主机 |
+
+## 按功能单独添加
+
+以下文件不含主规则；使用扩展规则时无需重复添加。
+
+| 文件 | 条数 | 内容 |
+| --- | ---: | --- |
+| [Claude-Artifacts.list](Claude-Artifacts.list) | 7 | 官方列出的字体与 JavaScript 库 CDN |
+| [Claude-Shared-Services.list](Claude-Shared-Services.list) | 5 | Code 安装、插件、发布说明和 Homebrew 检查 |
+| [Claude-Telemetry.list](Claude-Telemetry.list) | 3 | 两个官方遥测主机及一个社区收录的分析主机 |
+| [Claude-Developer-Extras.list](Claude-Developer-Extras.list) | 1 | 官方列出的 Gerrit 模式，仅相关开发场景需要 |
+
+例如：
 
 ```ini
-RULE-SET,https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude.list,AI,update-interval=86400
+RULE-SET,https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude-Artifacts.list,Claude,update-interval=86400
 ```
 
-将这一行放在可能先匹配的通用规则之前，并放在 `GEOIP`、`FINAL` 等兜底规则之前。Surge 按顺序匹配，先匹配的规则决定策略。
+共享主机不都是聊天必需；分流规则也不会主动开启客户端中关闭的遥测。
 
-也可以在 Surge 的规则编辑界面添加远程规则集（`RULE-SET`），填入订阅地址并选择目标策略。界面名称可能随版本不同。
-
-## 主规则包含什么
-
-主规则共 **9 条**：8 条后缀规则和 1 条精确主机规则。后缀规则会同时覆盖根域名和全部子域名。
-
-| 域名 | 匹配 | 收录依据与范围 |
-| --- | --- | --- |
-| `anthropic.com` | 根域及子域 | 官方网络文档；覆盖 `api`、`mcp-proxy` 等子域 |
-| `claude.ai` | 根域及子域 | 官方网络文档；覆盖网页、账号认证、`downloads` 等子域 |
-| `claude.com` | 根域及子域 | 官方网络文档；覆盖登录跳转、`platform`、`code`、帮助文档等子域 |
-| `claudeusercontent.com` | 根域及子域 | 官方网络文档列出 `bridge` 与 `*.frame`；后缀规则兼顾内容子域 |
-| `claude.dev` | 根域及子域 | 官方 Cookie 清单列为第一方域名；不代表聊天必需 |
-| `clau.de` | 根域及子域 | 社区规则兼容补充 |
-| `claudemcpclient.com` | 根域及子域 | 社区规则兼容补充，未据官方资料确认具体功能或必要性 |
-| `claudemcpcontent.com` | 根域及子域 | 社区规则兼容补充，未据官方资料确认具体功能或必要性 |
-| `servd-anthropic-website.b-cdn.net` | 仅此主机 | 社区收录的 CDN 主机；不扩大匹配至整个 `b-cdn.net` |
-
-这些是分流范围，不代表每个域名都会在你的客户端中出现，也不是官方完整白名单。来源与证据边界见 [SOURCES.md](SOURCES.md)。
-
-## 可选：共享服务与遥测
-
-下面两份文件不包含主规则。仅在相应功能确有需要时添加，并替换策略名：
-
-```ini
-# Claude Code 安装、插件、更新和发布说明等共享服务（可选）
-RULE-SET,https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude-Shared-Services.list,Claude,update-interval=86400
-
-# Claude Code 可选遥测（可选）
-RULE-SET,https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude-Telemetry.list,Claude,update-interval=86400
-```
-
-共享服务文件精确匹配 `storage.googleapis.com`、`registry.npmjs.org`、`github.com`、`raw.githubusercontent.com`、`formulae.brew.sh`；遥测文件精确匹配官方文档中的两个 Datadog 接收主机。
-
-**这些是多应用共用的主机。启用后，其他应用访问同一主机的请求也会走该策略。** GitHub 插件的完整下载流程还可能访问其他资源主机；这些列表不保证覆盖任意插件、MCP 服务、外部登录提供商、云模型提供商或第三方网站。
-
-主规则没有泛匹配整个 `googleapis.com`、`githubusercontent.com`、`cloudflare.com`、`auth0.com`、`sentry.io` 或 `datadoghq.com`。使用 Google 登录、特定连接器或云平台时，应按实际请求另外分流。
-
-## 可选：DOMAIN-SET 格式
-
-如果偏好纯域名文件，可用等价的 `Claude.domainset`：
+仅主规则提供等价纯域名格式：
 
 ```ini
 DOMAIN-SET,https://raw.githubusercontent.com/Ampolio/surge-rules/main/Claude.domainset,Claude,update-interval=86400
 ```
 
-主规则的两种格式选一种即可。不要把 `.domainset` 文件作为 `RULE-SET` 导入，也不要把 `.list` 文件作为 `DOMAIN-SET` 导入。
+不要把 `.domainset` 当作 RULE-SET，或把 `.list` 当作 DOMAIN-SET。扩展版包含通配模式，不提供 DOMAIN-SET 格式。
 
 ## 验证与维护
 
-发布前检查规则语法、重复项、两种格式的一致性、已知官方端点覆盖和域名匹配边界；这不等于已在每个 Surge 版本中完成真实登录、对话或下载测试。
+逐项核对官方 CLI、桌面网络要求与 Artifacts 外部依赖，并对照四个社区项目。详见 [AUDIT.md](AUDIT.md)、[SOURCES.md](SOURCES.md) 和 [覆盖清单](audit/coverage.json)。
 
-导入后，在 Surge 请求记录中检查 `claude.ai`、`api.anthropic.com`、`platform.claude.com`、`bridge.claudeusercontent.com` 等实际请求是否命中本规则及预期策略。未安装或未使用的功能不一定产生这些请求。
+```sh
+python3 scripts/build_rules.py --check
+```
 
-`update-interval=86400` 让 Surge 每 24 小时重新拉取仓库文件；**仓库内容需要人工核对更新，目前没有自动抓取域名的任务。** 本规则只决定网络分流，服务是否可用还取决于节点、账号、组织配置和服务端状态。
+检查格式、重复与重叠、主规则两种格式一致性、扩展版等于组件并集、来源模式覆盖和相似域名边界。检查基于人工审阅后记录的来源快照，不自动抓取官网，也不是 Surge 原生解析或实际登录测试。
+
+`update-interval=86400` 表示每 24 小时拉取仓库文件；名单仍需人工核对。导入后可在 Surge 请求记录中确认实际请求命中预期策略。
+
+固定名单不能穷尽任意第三方登录、企业 SSO、支付、插件、MCP 服务器、外部网站与自定义网关，也不能预知版本新增端点；这些场景应按实际请求补充。规则只决定分流，不保证节点、账号和服务端状态。

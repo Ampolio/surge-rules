@@ -1,0 +1,134 @@
+{
+  "reviewed": "2026-10-16",
+  "timezone": "Asia/Singapore",
+  "method": "Human-reviewed domain-pattern snapshots; no automatic source refresh and no authenticated traffic capture.",
+  "sources": [
+    {
+      "id": "official-cli",
+      "url": "https://code.claude.com/docs/en/network-config#network-access-requirements",
+      "profile": "extended",
+      "patterns": [
+        "api.anthropic.com",
+        "claude.ai",
+        "claude.com",
+        "platform.claude.com",
+        "mcp-proxy.anthropic.com",
+        "downloads.claude.ai",
+        "storage.googleapis.com",
+        "registry.npmjs.org",
+        "bridge.claudeusercontent.com",
+        "*.frame.claudeusercontent.com",
+        "github.com",
+        "raw.githubusercontent.com",
+        "*-review.googlesource.com",
+        "http-intake.logs.us5.datadoghq.com",
+        "browser-intake-us5-datadoghq.com",
+        "formulae.brew.sh",
+        "code.claude.com"
+      ]
+    },
+    {
+      "id": "official-desktop",
+      "url": "https://code.claude.com/docs/en/desktop#network-access-requirements",
+      "profile": "main",
+      "patterns": [
+        "anthropic.com",
+        "*.anthropic.com",
+        "claude.ai",
+        "*.claude.ai",
+        "claude.com",
+        "*.claude.com",
+        "claude.app",
+        "*.claude.app",
+        "*.claudeusercontent.com",
+        "*.claudemcpcontent.com",
+        "api.anthropic.com",
+        "a-api.anthropic.com",
+        "a-cdn.anthropic.com",
+        "s-cdn.anthropic.com",
+        "assets-proxy.anthropic.com",
+        "a.claude.ai",
+        "assets.claude.ai",
+        "downloads.claude.ai",
+        "*.livepreview.claude.ai",
+        "platform.claude.com",
+        "*.livepreview.claude.app"
+      ]
+    },
+    {
+      "id": "official-artifacts",
+      "url": "https://code.claude.com/docs/en/network-config#third-party-hosts-for-artifact-fonts-and-libraries",
+      "profile": "extended",
+      "patterns": [
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
+        "cdnjs.cloudflare.com",
+        "cdn.jsdelivr.net",
+        "cdn.tailwindcss.com",
+        "code.jquery.com",
+        "unpkg.com"
+      ]
+    },
+    {
+      "id": "v2fly",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic",
+      "profile": "main",
+      "patterns": [
+        "anthropic.com",
+        "clau.de",
+        "claude.ai",
+        "claude.com",
+        "claude.dev",
+        "claudemcpclient.com",
+        "claudemcpcontent.com",
+        "claudeusercontent.com",
+        "servd-anthropic-website.b-cdn.net"
+      ]
+    },
+    {
+      "id": "metacubex",
+      "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/anthropic.list",
+      "profile": "main",
+      "patterns": [
+        "anthropic.com",
+        "clau.de",
+        "claude.ai",
+        "claude.com",
+        "claude.dev",
+        "claudemcpclient.com",
+        "claudemcpcontent.com",
+        "claudeusercontent.com",
+        "servd-anthropic-website.b-cdn.net"
+      ]
+    },
+    {
+      "id": "blackmatrix7-claude",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list",
+      "profile": "extended",
+      "patterns": [
+        "cdn.usefathom.com",
+        "anthropic.com",
+        "claude.ai"
+      ]
+    },
+    {
+      "id": "blackmatrix7-anthropic",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list",
+      "profile": "main",
+      "patterns": [
+        "servd-anthropic-website.b-cdn.net",
+        "anthropic.com",
+        "claude.ai"
+      ]
+    },
+    {
+      "id": "acl4ssr",
+      "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Claude.list",
+      "profile": "main",
+      "patterns": [
+        "anthropic.com",
+        "claude.ai"
+      ]
+    }
+  ]
+}

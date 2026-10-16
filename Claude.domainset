@@ -6,12 +6,13 @@
 # Official documentation.
 .anthropic.com
 .claude.ai
+.claude.app
 .claude.com
 .claude.dev
 .claudeusercontent.com
+.claudemcpcontent.com
 
 # Community compatibility additions; see SOURCES.md.
 .clau.de
 .claudemcpclient.com
-.claudemcpcontent.com
 servd-anthropic-website.b-cdn.net

@@ -4,19 +4,31 @@
 
 ## 官方资料
 
-- [Claude Code：Enterprise network configuration](https://code.claude.com/docs/en/network-config#network-access-requirements)：核对 API、登录、连接器代理、下载、内容与浏览器桥接端点，以及按功能需要的共享服务和可选遥测。主规则用四条根域后缀规则覆盖该文档中的 Claude / Anthropic 专属主机；将精确主机扩大为根域后缀是本项目的维护选择，并非官方防火墙白名单的逐条复制。
-- [Anthropic：What Cookies Does Anthropic Use?](https://privacy.claude.com/en/articles/10023541-what-cookies-does-anthropic-use)：列出 `claude.dev` 为第一方 Cookie 域名，支持其关联性；不证明它是 Claude 聊天必需端点。
-- [Surge：Rule Sets](https://manual.nssurge.com/rules/ruleset.html)：外部规则集使用不含策略名的规则行；由导入行指定统一策略；支持 `update-interval`。
-- [Surge：Domain Rules](https://manual.nssurge.com/rules/domain.html)：`DOMAIN` 精确匹配；`DOMAIN-SUFFIX` 匹配根域及子域；`DOMAIN-SET` 中前导点表示后缀匹配。
+- [Claude Code 网络要求](https://code.claude.com/docs/en/network-config#network-access-requirements)：逐项核对 CLI 表格、桌面与 MCP Apps 说明、Artifacts 外部依赖。
+- [Claude Desktop 网络要求](https://code.claude.com/docs/en/desktop#network-access-requirements)：补充 `claude.app`，确认动态预览及内容子域；`claudemcpcontent.com` 已由官方确认用于交互组件。
+- [Anthropic Cookie 清单](https://privacy.claude.com/en/articles/10023541-what-cookies-does-anthropic-use)：确认 `claude.dev` 的第一方关联，不证明聊天必需。
+- [Windows 部署](https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows)与 [Cowork 架构](https://support.claude.com/en/articles/14479288-claude-cowork-architecture-overview)：补充检查部署与云端执行的网络边界。
+- [Surge 规则集](https://manual.nssurge.com/rules/ruleset.html)与 [域名规则](https://manual.nssurge.com/rules/domain.html)：核对匹配语义及文件格式。
 
-## 社区兼容补充
+后缀规则比官方精确主机清单覆盖更广，是本项目的维护选择；本项目不是企业防火墙最小权限白名单。
 
-- [v2fly/domain-list-community：anthropic](https://github.com/v2fly/domain-list-community/blob/master/data/anthropic)（[原始文件](https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic)）：直接查看上游维护的域名名单，补充 `clau.de`、`claudemcpclient.com`、`claudemcpcontent.com` 和精确 CDN 主机 `servd-anthropic-website.b-cdn.net`。这只能证明上游将其归入 Anthropic 分类；本次未从官方资料验证这四项的具体用途或必要性。上游文件会变化，核对日期对应本次查看的内容。
+## 社区交叉核对
 
-## 未作出的承诺
+直接查看以下实际文件。部分项目复用上游，因此四个项目不等于四份独立抓包证据。
 
-- 不将域名归类、DNS 可解析或官网提及等同于某客户端必然访问该域名。
-- 不保证穷尽全部客户端版本、地区、认证提供商、支付、第三方连接器、插件或云平台端点。
-- 不使用固定 IP、IP 段或域名关键词猜测补全；CDN 与服务地址可能变化。
-- 不因域名在历史 Artifact 链接中出现，就直接纳入当前主规则。例如本次未将 `claude.site` 纳入主规则。
-- 分流规则不能保证账号状态、服务端地区判断或可用性，也不改变云端连接器的网络出口。
+- [v2fly：anthropic](https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic)
+- [MetaCubeX：anthropic](https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/anthropic.list)
+- [blackmatrix7：Claude](https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Claude/Claude.list) 与 [Anthropic](https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Anthropic/Anthropic.list)
+- [ACL4SSR：Claude](https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Claude.list)
+
+社区特有补充为 `clau.de`、`claudemcpclient.com`、专用 CDN 和 `cdn.usefathom.com`；最后一项归入可选分析服务。收录只说明维护者将其归类为相关域名，不证明当前客户端一定访问。
+
+## 排除与限制
+
+- `claude.site`：历史 Artifact 链接中出现过，但本次审阅的当前网络要求及上述名单均未确认现时必要性，暂不收录。
+- `anthropic.auth0.com`、`challenges.cloudflare.com`、泛匹配 Sentry/Statsig：本次证据不足以统一标为当前必需；若特定认证流程实测需要，应按精确主机补充。
+- 官方 [开发容器防火墙示例](https://raw.githubusercontent.com/anthropics/claude-code/main/.devcontainer/init-firewall.sh)还列出 VS Code、Sentry/Statsig 等；它是特定示例环境，未机械合并为全部客户端的现时要求。
+- 不泛匹配整片 Google/AWS/Cloudflare CDN。模型平台、组织 SSO、网关、支付及任意插件/MCP 目标按实际地址配置。
+- 未进行已登录客户端抓包或全部平台实测，不宣称永久无遗漏。
+
+逐项清单见 [audit/coverage.json](audit/coverage.json)，审阅结论见 [AUDIT.md](AUDIT.md)。

@@ -1,7 +1,11 @@
-# OPTIONAL: shared operational telemetry hosts documented for Claude Code.
+# OPTIONAL: shared operational telemetry and community-listed analytics.
 # Reviewed: 2026-10-16 (Asia/Singapore)
 # Source: https://code.claude.com/docs/en/network-config
 # Not required for core conversations. Not exclusive to Claude.
 # Other applications using these exact hosts will follow the selected policy.
 DOMAIN,http-intake.logs.us5.datadoghq.com
 DOMAIN,browser-intake-us5-datadoghq.com
+
+# Community-listed web analytics, not verified as a current required endpoint.
+# Source: blackmatrix7/ios_rule_script, rule/Surge/Claude/Claude.list
+DOMAIN,cdn.usefathom.com

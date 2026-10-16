@@ -1,0 +1,13 @@
+# OPTIONAL: shared font and JavaScript hosts used by Artifacts.
+# Reviewed: 2026-10-16 (Asia/Singapore)
+# Sources: https://code.claude.com/docs/en/desktop#network-access-requirements
+# https://code.claude.com/docs/en/network-config#third-party-hosts-for-artifact-fonts-and-libraries
+# These exact hosts are also used by unrelated websites and applications.
+# Missing fonts can fall back; missing JavaScript can break artifact features.
+DOMAIN,fonts.googleapis.com
+DOMAIN,fonts.gstatic.com
+DOMAIN,cdnjs.cloudflare.com
+DOMAIN,cdn.jsdelivr.net
+DOMAIN,cdn.tailwindcss.com
+DOMAIN,code.jquery.com
+DOMAIN,unpkg.com
