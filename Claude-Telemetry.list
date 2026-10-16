@@ -1,0 +1,7 @@
+# OPTIONAL: shared operational telemetry hosts documented for Claude Code.
+# Reviewed: 2026-10-16 (Asia/Singapore)
+# Source: https://code.claude.com/docs/en/network-config
+# Not required for core conversations. Not exclusive to Claude.
+# Other applications using these exact hosts will follow the selected policy.
+DOMAIN,http-intake.logs.us5.datadoghq.com
+DOMAIN,browser-intake-us5-datadoghq.com

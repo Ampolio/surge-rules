@@ -1,0 +1,17 @@
+# Claude / Anthropic - Surge DOMAIN-SET
+# Reviewed: 2026-10-16 (Asia/Singapore)
+# Same coverage as Claude.list. Import one format only.
+# Leading dot means the domain itself plus all subdomains.
+
+# Official documentation.
+.anthropic.com
+.claude.ai
+.claude.com
+.claude.dev
+.claudeusercontent.com
+
+# Community compatibility additions; see SOURCES.md.
+.clau.de
+.claudemcpclient.com
+.claudemcpcontent.com
+servd-anthropic-website.b-cdn.net

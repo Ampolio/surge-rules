@@ -1,0 +1,18 @@
+# Claude / Anthropic - Surge RULE-SET
+# Reviewed: 2026-10-16 (Asia/Singapore)
+# Sources and scope: https://github.com/Ampolio/surge-rules/blob/main/SOURCES.md
+# No policy here. Choose your proxy policy on the importing RULE-SET line.
+
+# Official documentation: first-party domains and all subdomains.
+DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,claude.dev
+DOMAIN-SUFFIX,claudeusercontent.com
+
+# Community compatibility additions (not an official required-endpoint list).
+DOMAIN-SUFFIX,clau.de
+DOMAIN-SUFFIX,claudemcpclient.com
+DOMAIN-SUFFIX,claudemcpcontent.com
+# Match only this dedicated CDN hostname, not all of b-cdn.net.
+DOMAIN,servd-anthropic-website.b-cdn.net

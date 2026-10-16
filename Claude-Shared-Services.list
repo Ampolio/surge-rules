@@ -1,0 +1,16 @@
+# OPTIONAL: shared service hosts used by some Claude Code features.
+# Reviewed: 2026-10-16 (Asia/Singapore)
+# Source: https://code.claude.com/docs/en/network-config
+# Host-based rules also route other applications using the same hostname.
+# Enable only if needed. These hosts are not exclusive to Claude.
+
+# Plugin metadata and legacy native installer/updater (before 2.1.116).
+DOMAIN,storage.googleapis.com
+# npm/bun installation, npm plugins, and npx-based MCP servers.
+DOMAIN,registry.npmjs.org
+# GitHub-hosted plugin marketplaces and repositories.
+DOMAIN,github.com
+# Release notes.
+DOMAIN,raw.githubusercontent.com
+# Update checks for Homebrew installations.
+DOMAIN,formulae.brew.sh
